@@ -1,4 +1,4 @@
-name: 🚀 Deploy til One.com (sikkerjob.dk)
+name: 🚀 Deploy til One.com (SFTP - sikkerjob.dk)
 
 on:
   push:
@@ -6,21 +6,21 @@ on:
       - main
 
 jobs:
-  ftp-deploy:
-    name: Upload til One.com via FTP
+  sftp-deploy:
+    name: Upload til One.com via SFTP
     runs-on: ubuntu-latest
 
     steps:
       - name: Hent seneste kode
         uses: actions/checkout@v4
 
-      - name: Upload filer til One.com
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Upload filer til One.com via SFTP
+        uses: wangyucode/sftp-deploy@v1.2.3
         with:
           server: ${{ secrets.FTP_SERVER }}
+          port: 22
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          server-dir: /public_html/
-          local-dir: ./
-          git-ftp-args: --insecure
+          local-path: ./
+          remote-path: /public_html/
+          delete-remote-files: false
