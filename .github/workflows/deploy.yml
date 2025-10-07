@@ -15,12 +15,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Upload filer til One.com via SFTP
-        uses: wangyucode/sftp-deploy@v1.2.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
-          port: 22
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-path: ./
-          remote-path: /public_html/
-          delete-remote-files: false
+          protocol: sftp
+          port: 22
+          server-dir: /public_html/
+          local-dir: ./
+          git-ftp-args: --insecure
